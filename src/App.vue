@@ -7,7 +7,7 @@ import VHoldApp from './v-hold-directive/App.vue'
 
 export default {
   components: {
-    VHoldApp
+    VHoldApp,
   }
 }
 </script>

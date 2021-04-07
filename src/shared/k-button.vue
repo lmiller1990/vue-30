@@ -1,6 +1,6 @@
 <template>
   <button 
-    class="mb-2 py-2 px-4 rounded-lg"
+    class="mb-2 py-2 px-4 rounded-lg disabled:opacity-50"
     :class="className"
   >
     <slot />
