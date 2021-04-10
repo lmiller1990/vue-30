@@ -228,6 +228,21 @@
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.0-rc.4.tgz#536175be968e7c5741e9c95f117024d5053ea54c"
   integrity sha512-DocrrFP28M7NO7y7iGiX9sf9n1AKEqkxXO5wedtp5FkHiAkc0xfmD4lvxgi4re5+xw7Zzb9U/vrhXKQZ0I4Q9g==
 
+"@vueuse/core@^4.8.1":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.8.1.tgz#d7a7fb2e72610d1962ecb9244bd93dacb96d921c"
+  integrity sha512-oXFEDaKNU69Rj20/Hd7ZlmTpEtA2M19cRkZaL4A0Nl0w5Wb5In/8aK+0vtdi1VyMUXXbq6h1OGKCJcIhg5cziA==
+  dependencies:
+    "@vueuse/shared" "4.8.1"
+    vue-demi latest
+
+"@vueuse/shared@4.8.1":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-4.8.1.tgz#45fd5f64bf4e8944db42a5b72fa2705cfc74608a"
+  integrity sha512-ONKJoIvZPrGCA8loK7dX+ZcjgZLikI+vPiz1lWlXs6+jZiQiZSLkmvg1NjV6Cfb6OqbDCfEScTWLbZHB7EwrRw==
+  dependencies:
+    vue-demi latest
+
 acorn-node@^1.6.1:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/acorn-node/-/acorn-node-1.8.2.tgz#114c95d64539e53dede23de8b9d96df7c7ae2af8"
@@ -1129,6 +1144,11 @@ hash-sum@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/hash-sum/-/hash-sum-2.0.0.tgz#81d01bb5de8ea4a214ad5d6ead1b523460b0b45a"
   integrity sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==
+
+highlight.js@^10.7.2:
+  version "10.7.2"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.7.2.tgz#89319b861edc66c48854ed1e6da21ea89f847360"
+  integrity sha512-oFLl873u4usRM9K63j4ME9u3etNF0PLiJhSQ8rdfuL51Wn3zkD6drf9ZW0dOzjnZI22YYG24z30JcmfCZjMgYg==
 
 html-tags@^3.1.0:
   version "3.1.0"
@@ -2336,6 +2356,11 @@ vite@^2.1.5:
     rollup "^2.38.5"
   optionalDependencies:
     fsevents "~2.3.1"
+
+vue-demi@latest:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.7.4.tgz#4c6be525788e1f6b3fd5d4f5f9f2148cf6645979"
+  integrity sha512-PT0qzI9Rp8R8eUAsTPXADC+KAZdrMufmbZqEMMqvaiesWyjCpgyuuvS5Su8cvBjK9RevLT/YfFiKWxc8YB9/8g==
 
 vue@^3.0.5:
   version "3.0.11"

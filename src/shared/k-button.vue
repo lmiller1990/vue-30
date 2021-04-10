@@ -16,6 +16,14 @@ export default defineComponent({
   name: 'k-button',
 
   props: {
+    override: {
+      type: String,
+      default: ''
+    },
+    wide: {
+      type: Boolean,
+      default: false
+    },
     bg: {
       type: String as () => 'gray',
       default: 'gray'
@@ -27,7 +35,14 @@ export default defineComponent({
   },
 
   setup(props) {
-    const className = computed(() => cs(`bg-${props.bg}-${props.weight} active:bg-${props.bg}-${props.weight + 100}`))
+    const className = computed(() => cs(
+      props.override,
+      `bg-${props.bg}-${props.weight}`,
+      `active:bg-${props.bg}-${props.weight + 100}`,
+      {
+        'w-full': props.wide
+      }
+    ))
 
     return {
       className

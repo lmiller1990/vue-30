@@ -1,5 +1,5 @@
 <template>
-  <!-- <v-hold-app /> -->
+  <v-hold-app /> 
   <tab-container v-model="activeTabId">
     <tab tabId="1">Tab 1</tab>
     <tab tabId="2">Tab 2</tab>
