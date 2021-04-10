@@ -1,10 +1,10 @@
 <template>
   <div 
-    class="bg-blue-300 w-20 absolute"
+    class="bg-blue-300 w-20"
     ref="target"
     :style="style"
   >
-    item
+    <slot />
   </div>
 </template>
 
