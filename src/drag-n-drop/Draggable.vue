@@ -1,5 +1,5 @@
 <template>
-    <div 
+    <div
       class="bg-blue-300"
       @dragstart="dragstart"
       @dragend.prevent="dragend"
@@ -31,16 +31,22 @@
       let prev: string | null
       let $draggable: HTMLDivElement[] = []
 
-      const getHoveredElement = (event: DragEvent, $els: HTMLDivElement[], exclude?: string | null) => {
+      const getHoveredElement = (
+        event: DragEvent,
+        $els: HTMLDivElement[],
+        exclude?: string | null,
+        log: boolean = false,
+        threshold: number = 1
+      ) => {
         return $els.find($x => {
-          const $cand = inRect(event, $x.getBoundingClientRect())
+          const $cand = inRect(event, $x.getBoundingClientRect(), threshold, log)
           return $cand && $x.getAttribute('drag-key') !== exclude
         })
       }
 
       const dragstart = (event: DragEvent) => {
         const $els = Array.from(root.value!.querySelectorAll<HTMLDivElement>('[drag-key]'))
-        const $in = getHoveredElement(event, $els)
+        const $in = getHoveredElement(event, $els, null, true, 1)
         $draggable = $els
 
         if (!$in) {
@@ -51,12 +57,12 @@
       }
 
       const dragover = (event: DragEvent) => {
-        const $over = getHoveredElement(event, $draggable, store.dragItemId.value)
+        const $over = getHoveredElement(event, $draggable, store.dragItemId.value, false, 0.8)
         if ($over && prev !== $over.getAttribute('drag-key')) {
           prev = $over.getAttribute('drag-key')
 
-          const indexOfSrc = props.modelValue.findIndex(x => x === store.dragItemId.value) 
-          const indexOfDest = props.modelValue.findIndex(x => x === prev) 
+          const indexOfSrc = props.modelValue.findIndex(x => x === store.dragItemId.value)
+          const indexOfDest = props.modelValue.findIndex(x => x === prev)
 
           if (indexOfSrc < indexOfDest) {
             const newArr = props.modelValue.reduce<Array<any>>((acc, curr, index) => {
@@ -83,7 +89,7 @@
               return acc.concat(curr)
             }, [])
 
-            console.log(newArr)
+            // console.log(newArr)
             ctx.emit('update:modelValue', newArr)
           }
         }
@@ -96,8 +102,8 @@
       }
 
       // store.bus.subscribe('swap', ({ dragSrcKey, dragDestKey}: { dragSrcKey: string, dragDestKey: string }) => {
-      //   const indexOfSrc = props.modelValue.findIndex(x => x === dragSrcKey) 
-      //   const indexOfDest = props.modelValue.findIndex(x => x === dragDestKey) 
+      //   const indexOfSrc = props.modelValue.findIndex(x => x === dragSrcKey)
+      //   const indexOfDest = props.modelValue.findIndex(x => x === dragDestKey)
 
       //   // coming before dest
       //   if (indexOfSrc < indexOfDest) {
@@ -133,7 +139,7 @@
 
       const dragend = (event: MouseEvent) => {
         store.dragItemId.value = null
-        console.log('Dragend')
+        // console.log('Dragend')
       }
 
       return {
