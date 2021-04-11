@@ -1,11 +1,12 @@
 <template>
+  <button @click="swap">swap</button>
   <transition-group 
     tag="div" 
     class="flex"
     name="cells"
     @dragstart="dragstart"
-    @dragover="dragover"
   >
+    <!-- @dragover="dragover" -->
     <div 
       v-for="(item, idx) in items" 
       :ref="el => setEl(el, idx)"
@@ -19,8 +20,8 @@
 </template>
 
 <script lang="ts">
-  import { isTypedArray } from 'cypress/types/lodash'
-import { ComponentInternalInstance, defineComponent, FunctionalComponent, h, reactive, Ref, ref } from 'vue'
+  import { move } from './utils'
+  import { ComponentInternalInstance, defineComponent, reactive, Ref, ref } from 'vue'
   import Item from './Draggable.vue'
 
   interface DraggableItem {
@@ -43,7 +44,43 @@ import { ComponentInternalInstance, defineComponent, FunctionalComponent, h, rea
       })
 
       for (let i = 0; i < 5; i++) {
-        items.value.push({ id: (i + 1).toString(), ref: undefined })
+        items.value.push({ id: (i).toString(), ref: undefined })
+      }
+
+      function randomIntFromInterval(min: number, max: number): [number, number] {
+        const to = Math.floor(Math.random() * (max - min + 1) + min)
+        const from = Math.floor(Math.random() * (max - min + 1) + min)
+        if (to === from) {
+          return randomIntFromInterval(min, max)
+        }
+        return [to, from]
+      }
+
+      const swap = () => {
+        const [to, from] = randomIntFromInterval(0, 4)
+        const elToMove = items.value[from]
+        console.log({ to, from })
+        console.log(items.value.map(x => x.id))
+        items.value = items.value.reduce<DraggableItem[]>((acc, curr, idx) => {
+          console.log(idx, from, to, curr.id)
+          if (idx === from) {
+            return acc
+          }
+          if (idx === to) {
+            // console.log('Inserting', items.value[from]
+            return acc.concat(items.value[from], curr)
+          }
+          return acc.concat(curr)
+        }, [])
+        console.log(items.value.map(x => x.id))
+        // items.value.splice(to + 1, 0, elToMove)
+        // items.value.splice(from, 1)
+        // console.log(items.value)
+
+        // console.log({ to, from })
+        // const newArr = move({ to, from, source: items.value })
+        // console.log(newArr.map(x => x.id))
+        // items.value = newArr
       }
 
       const getDelta = (event: MouseEvent, element: HTMLDivElement) => {
@@ -73,44 +110,44 @@ import { ComponentInternalInstance, defineComponent, FunctionalComponent, h, rea
           && event.pageY < rect.y + rect.height
       }
 
-      const dragover = (event: DragEvent) => {
-        event.preventDefault()
+      // const dragover = (event: DragEvent) => {
+      //   event.preventDefault()
 
-        const best = getClosestElement(event, items)
-        if (best === draggingId.value) {
-          return
-        }
+      //   const best = getClosestElement(event, items)
+      //   if (best === draggingId.value) {
+      //     return
+      //   }
 
-        const element = items.value.find(x => x.id === best)
+      //   const element = items.value.find(x => x.id === best)
         
-        if (!element || !inRect(event, (element.ref as HTMLDivElement).getBoundingClientRect())) {
-          return
-        }
+      //   if (!element || !inRect(event, (element.ref as HTMLDivElement).getBoundingClientRect())) {
+      //     return
+      //   }
 
-        const originalIndex = items.value.findIndex(el => el.id === draggingId.value)
-        const destinationIndex =  items.value.findIndex(el => el.id === best)
+      //   const originalIndex = items.value.findIndex(el => el.id === draggingId.value)
+      //   const destinationIndex =  items.value.findIndex(el => el.id === best)
 
-        console.log(state.inTrans, state.targetId, state.timeoutId)
-        if (state.inTrans && state.targetId === items.value[destinationIndex].id) {
-          return
-        }
+      //   console.log(state.inTrans, state.targetId, state.timeoutId)
+      //   if (state.inTrans && state.targetId === items.value[destinationIndex].id) {
+      //     return
+      //   }
 
-        if (items.value[destinationIndex].id !== state.targetId) {
-          clearTimeout(state.timeoutId)
-        }
+      //   if (items.value[destinationIndex].id !== state.targetId) {
+      //     clearTimeout(state.timeoutId)
+      //   }
 
-        state.inTrans = true
+      //   state.inTrans = true
 
-        state.timeoutId = setTimeout(() => {
-          state.inTrans = false
-        }, 500)
+      //   state.timeoutId = setTimeout(() => {
+      //     state.inTrans = false
+      //   }, 500)
 
-        state.targetId = element.id
-        const temp = items.value[originalIndex]
-        items.value[originalIndex] = items.value[destinationIndex]
-        items.value[destinationIndex] = temp
-        console.log(`after: ${items.value.map(x => x.id).join(',')}`)
-      }
+      //   state.targetId = element.id
+      //   const temp = items.value[originalIndex]
+      //   items.value[originalIndex] = items.value[destinationIndex]
+      //   items.value[destinationIndex] = temp
+      //   console.log(`after: ${items.value.map(x => x.id).join(',')}`)
+      // }
 
       const dragstart = (event: DragEvent) => {
         draggingId.value = getClosestElement(event, items)
@@ -119,7 +156,7 @@ import { ComponentInternalInstance, defineComponent, FunctionalComponent, h, rea
 
       return {
         draggingId,
-        dragover,
+        // dragover,
         dragstart,
         setEl: (el: Element | ComponentInternalInstance | null, index: number) => {
           console.log('Set el')
@@ -127,7 +164,8 @@ import { ComponentInternalInstance, defineComponent, FunctionalComponent, h, rea
             items.value[index].ref = el
           }
         },
-        items
+        items,
+        swap
       }
     }
   })
