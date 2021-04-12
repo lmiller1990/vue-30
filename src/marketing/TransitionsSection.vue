@@ -26,9 +26,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import TransitionApp from './transitions/App.vue'
-import { Section } from './marketing/sharedComponents'
-import Card from './marketing/Card.vue'
+import TransitionApp from '../transitions/App.vue'
+import { Section } from './sharedComponents'
+import Card from './Card.vue'
 import { highlightAuto } from 'highlight.js'
 
 const code = `

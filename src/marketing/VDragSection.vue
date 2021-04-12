@@ -42,10 +42,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { Section } from './marketing/sharedComponents'
-import Card from './marketing/Card.vue'
-import Draggable from './drag-n-drop/Draggable.vue'
-import Item from './drag-n-drop/Item.vue'
+import { Section } from './sharedComponents'
+import Card from './Card.vue'
+import Draggable from '../drag-n-drop/Draggable.vue'
+import Item from '../drag-n-drop/Item.vue'
 import { highlightAuto } from 'highlight.js'
 
 const code = `

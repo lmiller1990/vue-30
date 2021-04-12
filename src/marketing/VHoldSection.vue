@@ -31,9 +31,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Section } from './marketing/sharedComponents'
-import Card from './marketing/Card.vue'
-import VCircle from './v-hold-directive/v-circle.vue'
+import { Section } from './sharedComponents'
+import Card from './Card.vue'
+import VCircle from '../v-hold-directive/v-circle.vue'
 import { highlightAuto } from 'highlight.js'
 
 const vHoldCode = `

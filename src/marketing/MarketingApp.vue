@@ -86,10 +86,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Card from './marketing/Card.vue'
-import { Para, Section } from './marketing/sharedComponents'
+import Card from './Card.vue'
+import { Para, Section } from './sharedComponents'
 
-import Powerbar from './v-hold-directive/power-bar.vue'
+import Powerbar from '../v-hold-directive/power-bar.vue'
 import VHoldSection from './VHoldSection.vue'
 import TransitionsSection from './TransitionsSection.vue'
 import VDragSection from './VDragSection.vue'
