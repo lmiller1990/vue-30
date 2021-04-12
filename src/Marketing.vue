@@ -78,29 +78,7 @@
 
       <VHoldSection />
       <VDragSection />
-
-      <Section>
-        <card> 
-          <template v-slot:title>
-            <h1 class="text-3xl">Animations and Transitions</h1>
-          </template>
-
-          <template v-slot:left>
-            <div class="flex flex-col justify-center">
-              <p>
-                <div class="p-4 bg-gray-800 text-white whitespace-pre-wrap text-left rounded-lg">
-                  <div class="code" v-html="transitionCode" />
-                </div>
-              </p>
-            </div>
-          </template>
-
-          <template v-slot:right>
-            <transition-app />
-          </template>
-
-        </card>
-      </Section>
+      <TransitionsSection />
 
     </div>
   </div>
@@ -109,39 +87,25 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Card from './marketing/Card.vue'
-import TransitionApp from './transitions/App.vue'
 import { Para, Section } from './marketing/sharedComponents'
 
 import Powerbar from './v-hold-directive/power-bar.vue'
-import { highlightAuto } from 'highlight.js'
-import 'highlight.js/styles/atom-one-dark.css'
 import VHoldSection from './VHoldSection.vue'
+import TransitionsSection from './TransitionsSection.vue'
 import VDragSection from './VDragSection.vue'
-
-const transitionCode = `
-<transition-group as="div">
-  <cell v-for="cell in cells">
-    {{ cell }}
-  </cell>
-</transition-group>`.trim()
+import 'highlight.js/styles/atom-one-dark.css'
 
 
 export default defineComponent({
   components: {
     Card,
     Powerbar,
-    TransitionApp,
     VDragSection,
     VHoldSection,
+    TransitionsSection,
     Section,
     Para
   },
-
-  setup() {
-    return {
-      transitionCode: highlightAuto(transitionCode).value,
-    }
-  }
 })
 </script>
 
