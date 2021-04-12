@@ -6,7 +6,7 @@
       @dragover.prevent="dragover"
       ref="root"
     >
-      <slot @enter="enter" />
+      <slot />
     </div>
 
   <h1>debug</h1>
@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
-  import { inRect, useDrag } from './useDrag'
+  import { inRect } from './useDrag'
 
   export default defineComponent({
     props: {
@@ -26,8 +26,8 @@
     },
 
     setup(props, ctx) {
-      const store = useDrag()
       const root = ref<HTMLDivElement>()
+      const dragItemId = ref<string | null>(null)
       let prev: string | null
       let $draggable: HTMLDivElement[] = []
 
@@ -53,15 +53,15 @@
           throw Error('Cannot identify item dragged')
         }
 
-        store.dragItemId.value = $in.getAttribute('drag-key')
+        dragItemId.value = $in.getAttribute('drag-key')
       }
 
       const dragover = (event: DragEvent) => {
-        const $over = getHoveredElement(event, $draggable, store.dragItemId.value, false, 0.8)
+        const $over = getHoveredElement(event, $draggable, dragItemId.value, false, 0.9)
         if ($over && prev !== $over.getAttribute('drag-key')) {
           prev = $over.getAttribute('drag-key')
 
-          const indexOfSrc = props.modelValue.findIndex(x => x === store.dragItemId.value)
+          const indexOfSrc = props.modelValue.findIndex(x => x === dragItemId.value)
           const indexOfDest = props.modelValue.findIndex(x => x === prev)
 
           if (indexOfSrc < indexOfDest) {
@@ -89,7 +89,6 @@
               return acc.concat(curr)
             }, [])
 
-            // console.log(newArr)
             ctx.emit('update:modelValue', newArr)
           }
         }
@@ -97,53 +96,15 @@
         if (prev && !$over) {
           prev = null
         }
-
-        // console.log('dragover', event.target)
       }
 
-      // store.bus.subscribe('swap', ({ dragSrcKey, dragDestKey}: { dragSrcKey: string, dragDestKey: string }) => {
-      //   const indexOfSrc = props.modelValue.findIndex(x => x === dragSrcKey)
-      //   const indexOfDest = props.modelValue.findIndex(x => x === dragDestKey)
 
-      //   // coming before dest
-      //   if (indexOfSrc < indexOfDest) {
-      //     const newArr = props.modelValue.reduce<Array<any>>((acc, curr, index) => {
-      //       if (index === indexOfSrc) {
-      //         return acc
-      //       }
-      //       if (index === indexOfDest) {
-      //         return acc.concat(curr, props.modelValue[indexOfSrc])
-      //       }
-      //       return acc.concat(curr)
-      //     }, [])
-
-      //     ctx.emit('update:modelValue', newArr)
-      //   }
-
-      //   if (indexOfSrc > indexOfDest) {
-      //     console.log(`${dragSrcKey}, ${dragDestKey}`)
-      //     const newArr = props.modelValue.reduce<Array<any>>((acc, curr, index) => {
-      //       if (index === indexOfSrc) {
-      //         return acc
-      //       }
-      //       if (index === indexOfDest) {
-      //         return acc.concat(props.modelValue[indexOfSrc], curr)
-      //       }
-      //       return acc.concat(curr)
-      //     }, [])
-
-      //     console.log(newArr)
-      //     ctx.emit('update:modelValue', newArr)
-      //   }
-      // })
-
-      const dragend = (event: MouseEvent) => {
-        store.dragItemId.value = null
-        // console.log('Dragend')
+      const dragend = () => {
+        dragItemId.value = null
       }
 
       return {
-        dragItemId: store.dragItemId,
+        dragItemId,
         dragend,
         dragover,
         dragstart,
