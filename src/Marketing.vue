@@ -86,10 +86,6 @@
           </template>
 
           <template v-slot:left>
-            <transition-app />
-          </template>
-
-          <template v-slot:right>
             <div class="flex flex-col justify-center">
               <p>
                 <div class="p-4 bg-gray-800 text-white whitespace-pre-wrap text-left rounded-lg">
@@ -98,6 +94,11 @@
               </p>
             </div>
           </template>
+
+          <template v-slot:right>
+            <transition-app />
+          </template>
+
         </card>
       </Section>
 

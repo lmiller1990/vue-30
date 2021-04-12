@@ -1,15 +1,22 @@
-export function inRect (event: DragEvent, rect: DOMRect, threshold: number = 1, log: boolean = false) {
+export interface InRectOptions {
+  vThreshold?: number
+  hThreshold?: number
+  log?: boolean
+}
+
+export function inRect (event: DragEvent,  rect: DOMRect,  options?: InRectOptions) {
   const { clientX, clientY } = event
+  const { vThreshold = 1, hThreshold = 1 } = options ?? {}
 
-  const left = rect.x
-  const right = rect.x + rect.width
-  const top = rect.y
-  const bottom = rect.y + rect.height
+  // const left = rect.x
+  // const right = rect.x + rect.width
+  // const top = rect.y
+  // const bottom = rect.y + rect.height
 
-  const tightLeft = rect.x + (rect.width - (threshold * rect.width))
-  const tightRight = rect.x + (rect.width * threshold) 
-  const tightTop = rect.y + (rect.height - (threshold * rect.height))
-  const tightBottom = rect.y + (rect.height * threshold)
+  const tightLeft = rect.x + (rect.width - (hThreshold * rect.width))
+  const tightRight = rect.x + (rect.width * hThreshold) 
+  const tightTop = rect.y + (rect.height - (vThreshold * rect.height))
+  const tightBottom = rect.y + (rect.height * vThreshold)
 
 
   return (

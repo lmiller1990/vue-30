@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
-  import { inRect } from './useDrag'
+  import { inRect, InRectOptions } from './useDrag'
 
   export default defineComponent({
     props: {
@@ -30,19 +30,18 @@
       const getHoveredElement = (
         event: DragEvent,
         $els: HTMLDivElement[],
-        exclude?: string | null,
-        log: boolean = true,
-        threshold: number = 1
+        exclude: string | null,
+        options?: InRectOptions
       ) => {
         return $els.find($x => {
-          const $cand = inRect(event, $x.getBoundingClientRect(), threshold, log)
+          const $cand = inRect(event, $x.getBoundingClientRect(), options)
           return $cand && $x.getAttribute('drag-key') !== exclude
         })
       }
 
       const dragstart = (event: DragEvent) => {
         const $els = Array.from(root.value!.querySelectorAll<HTMLDivElement>('[drag-key]'))
-        const $in = getHoveredElement(event, $els, null, true, 1)
+        const $in = getHoveredElement(event, $els, null)
         $draggable = $els
 
         if (!$in) {
@@ -53,7 +52,10 @@
       }
 
       const dragover = (event: DragEvent) => {
-        const $over = getHoveredElement(event, $draggable, dragItemId.value, false, 0.9)
+        const $over = getHoveredElement(event, $draggable, dragItemId.value, {
+          vThreshold: 0.9,
+          hThreshold: 0.9
+        })
         if ($over && prev !== $over.getAttribute('drag-key')) {
           prev = $over.getAttribute('drag-key')
 
