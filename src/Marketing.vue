@@ -76,34 +76,8 @@
         </div>
       </Section>
 
-      <Section>
-        <card> 
-          <template v-slot:title>
-            <h1 class="text-3xl">Custom <code>v-hold</code> directive</h1>
-          </template>
-
-          <template v-slot:left>
-            <div class="flex flex-col justify-center">
-              <p>
-                <div class="p-4 bg-gray-800 text-white whitespace-pre-wrap text-left rounded-lg">
-                  <div class="code" v-html="vHoldCode" />
-                </div>
-              </p>
-            </div>
-          </template>
-
-          <template v-slot:right>
-            <div>
-              <div class="flex flex-col items-center">
-                <div class="flex">
-                  <v-circle :size="120" :interval="10" bg="green"/>
-                  <v-circle :size="120" :interval="100" bg="red" />
-                </div>
-              </div>
-            </div>
-          </template>
-        </card>
-      </Section>
+      <VHoldSection />
+      <VDragSection />
 
       <Section>
         <card> 
@@ -132,53 +106,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, FunctionalComponent, h } from 'vue'
-import VCircle from './v-hold-directive/v-circle.vue'
+import { defineComponent } from 'vue'
 import Card from './marketing/Card.vue'
 import TransitionApp from './transitions/App.vue'
+import { Para, Section } from './marketing/sharedComponents'
 
 import Powerbar from './v-hold-directive/power-bar.vue'
 import { highlightAuto } from 'highlight.js'
-// import 'highlight.js/styles/gradient-dark.css'
 import 'highlight.js/styles/atom-one-dark.css'
-
-const vHoldCode = `
-<div>
-  <v-circle v-hold="count" />
-  <v-circle v-hold:[100]="count" />
-</div>
-`.trim()
+import VHoldSection from './VHoldSection.vue'
+import VDragSection from './VDragSection.vue'
 
 const transitionCode = `
 <transition-group as="div">
   <cell v-for="cell in cells">
     {{ cell }}
   </cell>
-</transition-group>
-`.trim()
+</transition-group>`.trim()
 
-
-const Section: FunctionalComponent = (props, { slots }) => {
-  return h('section', { class: 'text-center w-full my-6 shadow-lg' }, slots.default && h(slots.default))
-}
-
-const Para: FunctionalComponent = (props, { slots }) => {
-  return h('p', { class: 'my-2' }, slots.default && h(slots.default))
-}
 
 export default defineComponent({
   components: {
-    Para,
     Card,
-    VCircle,
     Powerbar,
     TransitionApp,
-    Section
+    VDragSection,
+    VHoldSection,
+    Section,
+    Para
   },
 
   setup() {
     return {
-      vHoldCode: highlightAuto(vHoldCode).value,
       transitionCode: highlightAuto(transitionCode).value,
     }
   }

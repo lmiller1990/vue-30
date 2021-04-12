@@ -1,16 +1,12 @@
 <template>
-    <div
-      class="bg-blue-300"
-      @dragstart="dragstart"
-      @dragend.prevent="dragend"
-      @dragover.prevent="dragover"
-      ref="root"
-    >
-      <slot />
-    </div>
-
-  <h1>debug</h1>
-  {{ dragItemId }}
+  <div
+    @dragstart="dragstart"
+    @dragend.prevent="dragend"
+    @dragover.prevent="dragover"
+    ref="root"
+  >
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">
@@ -35,7 +31,7 @@
         event: DragEvent,
         $els: HTMLDivElement[],
         exclude?: string | null,
-        log: boolean = false,
+        log: boolean = true,
         threshold: number = 1
       ) => {
         return $els.find($x => {
@@ -104,7 +100,6 @@
       }
 
       return {
-        dragItemId,
         dragend,
         dragover,
         dragstart,

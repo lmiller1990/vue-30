@@ -1,7 +1,5 @@
-import { ref } from 'vue'
-
 export function inRect (event: DragEvent, rect: DOMRect, threshold: number = 1, log: boolean = false) {
-  const { pageX, pageY } = event
+  const { clientX, clientY } = event
 
   const left = rect.x
   const right = rect.x + rect.width
@@ -15,9 +13,16 @@ export function inRect (event: DragEvent, rect: DOMRect, threshold: number = 1, 
 
 
   return (
-    pageX > tightLeft // left
-    && pageX < tightRight // right
-    && pageY > tightTop // top
-    && pageY < tightBottom // bottom
+    clientX > tightLeft // left
+    && clientX < tightRight // right
+    && clientY > tightTop // top
+    && clientY < tightBottom // bottom
   )
+
+  // return (
+  //   clientX > left // left
+  //   && clientX < right // right
+  //   && clientY > top // top
+  //   && clientY < bottom // bottom
+  // )
 }
