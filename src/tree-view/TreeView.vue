@@ -4,15 +4,18 @@
     :key="content.id"
   >
     <label :style="style" :class="classFor(content)">
-      <span v-if="content.type === 'folder'">
-        >
+      <span 
+        v-if="content.type === 'folder'"
+        @click="toggle(content)"
+      >
+        {{ isOpen(content) ? 'v' : '>' }}
       </span>
 
       {{ content.name }}
     </label>
 
     <tree-view 
-      v-if="content.type === 'folder'"
+      v-if="content.type === 'folder' && isOpen(content)"
       :contents="content.contents"
       :depth="depth + 1"
     />
@@ -20,7 +23,8 @@
 </template>
 
 <script lang="ts">
-import { ref, watchEffect, defineComponent, CSSProperties } from 'vue'
+import { defineComponent, CSSProperties } from 'vue'
+import { useTreeView } from './useTreeView'
 
 interface FileNode {
   id: string
@@ -28,7 +32,7 @@ interface FileNode {
   name: string
 }
 
-interface FolderNode {
+export interface FolderNode {
   id: string
   type: 'folder'
   name: string
@@ -57,6 +61,12 @@ export default defineComponent({
       marginLeft: `${props.depth * 15}px`
     }
 
+    const treeView = useTreeView()
+
+    const isOpen = (content: FolderNode) => {
+      return treeView.openFolders.value.has(content.id)
+    }
+
     const classFor = (node: TreeNode) => {
       if (node.type === 'file') {
         return 'border-l border-black pl-2'
@@ -66,6 +76,8 @@ export default defineComponent({
     }
 
     return {
+      toggle: treeView.toggle,
+      isOpen,
       classFor,
       style
     }

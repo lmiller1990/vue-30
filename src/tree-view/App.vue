@@ -3,44 +3,9 @@
 </template>
 
 <script lang="ts">
-import TreeView, { TreeNode } from './TreeView.vue'
-
-const contents: TreeNode[] = [
-  {
-    id: '1',
-    type: 'file',
-    name: 'README.md'
-  },
-  {
-    id: '2',
-    type: 'folder',
-    name: 'src',
-    contents: [
-      {
-        id: '3',
-        type: 'file',
-        name: 'main.ts'
-      },
-      {
-        id: '4',
-        type: 'folder',
-        name: 'components',
-        contents: [
-          {
-            id: '5',
-            type: 'file',
-            name: 'Button.vue',
-          },
-          {
-            id: '6',
-            type: 'file',
-            name: 'TreeView.vue',
-          },
-        ]
-      }
-    ]
-  }
-]
+import { computed, onUnmounted } from '@vue/runtime-core'
+import TreeView from './TreeView.vue'
+import { useTreeView } from './useTreeView'
 
 export default {
   components: {
@@ -48,8 +13,15 @@ export default {
   },
 
   setup() {
+    const treeView = useTreeView()
+
+    onUnmounted(() => {
+      treeView.reset()
+    })
+
     return {
-      contents
+      contents: treeView.contents,
+      folders: computed(() => treeView.openFolders)
     }
   }
 }
