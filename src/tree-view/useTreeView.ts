@@ -42,7 +42,11 @@ const openFolders = ref<Set<string>>(new Set<string>())
 const contents = ref<TreeNode[]>(data)
 
 export function useTreeView() {
-  const toggle = (content: FolderNode) => {
+  const toggle = (content: TreeNode) => {
+    if (content.type === 'file') {
+      return
+    }
+
     if (openFolders.value.has(content.id)) {
       openFolders.value.delete(content.id)
     } else {

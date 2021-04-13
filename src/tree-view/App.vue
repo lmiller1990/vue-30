@@ -1,5 +1,7 @@
 <template>
-  <tree-view :contents="contents" />
+  <div class="m-6">
+    <tree-view :contents="contents" />
+  </div>
 </template>
 
 <script lang="ts">

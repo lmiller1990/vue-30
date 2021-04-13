@@ -3,16 +3,23 @@
     v-for="content in contents"
     :key="content.id"
   >
-    <label :style="style" :class="classFor(content)">
+    <div 
+      :style="style" 
+      @click.stop="toggle(content)"
+      class="cursor-pointer hover:bg-gray-200 py-1"
+    >
       <span 
         v-if="content.type === 'folder'"
-        @click="toggle(content)"
       >
-        {{ isOpen(content) ? 'v' : '>' }}
+        <img 
+          alt="icon name"
+          class="mr-2"
+          :src="`/src/open-iconic-master/svg/chevron-${isOpen(content) ? 'bottom' : 'right'}.svg`" 
+        > 
       </span>
 
       {{ content.name }}
-    </label>
+    </div>
 
     <tree-view 
       v-if="content.type === 'folder' && isOpen(content)"
@@ -47,7 +54,7 @@ export default defineComponent({
   props: {
     depth: {
       type: Number,
-      default: 0
+      default: 1
     },
 
     contents: {
@@ -58,7 +65,7 @@ export default defineComponent({
 
   setup(props) {
     const style: CSSProperties = {
-      marginLeft: `${props.depth * 15}px`
+      paddingLeft: `${props.depth * 15}px`
     }
 
     const treeView = useTreeView()
@@ -67,18 +74,9 @@ export default defineComponent({
       return treeView.openFolders.value.has(content.id)
     }
 
-    const classFor = (node: TreeNode) => {
-      if (node.type === 'file') {
-        return 'border-l border-black pl-2'
-      }
-
-      return 'pl-2'
-    }
-
     return {
       toggle: treeView.toggle,
       isOpen,
-      classFor,
       style
     }
   },
@@ -86,4 +84,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  img {
+    height: 12px;
+    width: 12px;
+    display: inline;
+  }
 </style>
