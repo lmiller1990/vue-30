@@ -7,12 +7,10 @@ export function useEventListener<E extends keyof DocumentEventMap>(
 ) {
 
   onMounted(() => {
-    console.log('add')
     doc.addEventListener(event, handler)
   })
 
   onUnmounted(() => {
-    console.log('remove')
     doc.removeEventListener(event, handler)
   })
 }

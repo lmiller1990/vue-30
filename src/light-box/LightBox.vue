@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, FunctionalComponent, h, ref } from 'vue'
+import { useKeyPress } from '../useKeypress'
 
 const Arrow: FunctionalComponent<{ rotate: number }> = (props) => {
   return h(
@@ -78,6 +79,8 @@ export default defineComponent({
     const close = () => {
       ctx.emit('close')
     }
+
+    useKeyPress('Escape', close)
 
     return {
       close,
