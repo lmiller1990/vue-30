@@ -1,4 +1,9 @@
 export interface InRectOptions {
+
+export function useFoo() {
+  onMounted(() => console.log('ok'))
+}
+
   vThreshold?: number
   hThreshold?: number
   log?: boolean
@@ -33,3 +38,24 @@ export function inRect (event: DragEvent,  rect: DOMRect,  options?: InRectOptio
   //   && clientY < bottom // bottom
   // )
 }
+
+
+/*
+const store = defineStore({
+  state() {
+    return {
+      foo: 'bar'
+    }
+  },
+  actions: {
+    update() {
+      this.foo = 'qux'
+    }
+  },
+  getters: {
+    yell() {
+      return this.state.foo.toUpperCase() 
+    }
+  }
+})
+*/
