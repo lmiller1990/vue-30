@@ -14,7 +14,7 @@ export interface Pinia {
 
 interface StoreWithState<Id extends string, S extends StateTree> {
   $id: Id
-  $state: S
+  state: S
 }
 
 export type Store<Id extends string, S extends StateTree, A> = StoreWithState<
@@ -80,7 +80,7 @@ function buildStoreToUse<
     ...wrappedActions,
   }) as Store<Id, S, A>
 
-  Object.defineProperty(store, '$state', descriptor)
+  Object.defineProperty(store, 'state', descriptor)
 
   return store
 }
@@ -128,11 +128,10 @@ export const useMainStore = defineStore({
   id: 'main',
   state: () => ({
     counter: 0,
-    name: 'lachlan',
   }),
   actions: {
     inc() {
-      this.$state.counter += 1
+      this.state.counter += 1
     },
   },
 })

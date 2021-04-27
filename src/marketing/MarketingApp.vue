@@ -1,12 +1,13 @@
 <template>
-  <div class="bg-green-400 h-full flex flex-col items-center">
+  <div class="bg-purple-500 h-full flex flex-col items-center">
     <div class="max-w-3xl">
       <Section>
         <div class="bg-white rounded-lg">
-          <h1 class="text-7xl bg-green-100 rounded-t-lg py-6">Vue.js 30</h1>
+          <!-- <h1 class="text-7xl bg-green-100 rounded-t-lg py-6">Vue.js 30</h1> -->
           <div class="flex justify-center text-left">
-            <div class="p-4 max-w-md">
-              <h4 class="text-3xl p-6">30 days and 30 skills to take your skills to the next level.</h4>
+            <div class="p-4">
+              <!-- <h4 class="text-3xl p-6">30 days and 30 skills to take your skills to the next level.</h4> -->
+              <img src="/banner.jpg" class="rounded-md">
               
               <div class="text-lg">
                 <para>

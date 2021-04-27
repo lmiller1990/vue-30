@@ -1,5 +1,5 @@
 <template>
-  {{ state.counter }}
+  {{ counter }}
   <button @click="click">Update</button>
 </template>
 
@@ -17,7 +17,7 @@ export default {
 
     return {
       click,
-      state: computed(() => store.$state)
+      counter: computed(() => store.state.counter)
     }
   },
 }
