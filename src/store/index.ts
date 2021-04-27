@@ -80,7 +80,7 @@ function buildStoreToUse<
     ...wrappedActions,
   }) as Store<Id, S, A>
 
-  // Object.defineProperty(store, 'state', descriptor)
+  Object.defineProperty(store, 'state', descriptor)
 
   return store
 }
@@ -102,10 +102,6 @@ function defineStore<Id extends string, S extends StateTree, A>(options: {
   }
 
   activePinia = pinia
-
-  // const store: Store<Id, S, Record<string, Method>, Record<string, Method>>
-
-  // const store: Store<Id, StateTree, Record<string, Method>>
 
   return function useStore(): Store<Id, S, A> {
     const storeAndDescriptor: StoreAndDescription<Id, S> = initStore(
