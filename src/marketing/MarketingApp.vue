@@ -3,16 +3,9 @@
     <div class="max-w-3xl">
       <Section>
         <div class="bg-white rounded-lg">
-<<<<<<< HEAD
-          <!-- <h1 class="text-7xl bg-green-100 rounded-t-lg py-6">Vue.js 30</h1> -->
-=======
-          <!--
-          <h1 class="text-7xl bg-green-100 rounded-t-lg py-6">Vue.js 30</h1>
-          -->
           <div class="rounded-lg mx-8 mt-8">
             <img src="/banner.jpg">
           </div>
->>>>>>> 9378d22434a933277fff6cb2c6dd7462bb9c9031
           <div class="flex justify-center text-left">
             <div class="p-4">
               <!-- <h4 class="text-3xl p-6">30 days and 30 skills to take your skills to the next level.</h4> -->
