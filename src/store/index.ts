@@ -24,14 +24,14 @@ export type Store<Id extends string, S extends StateTree, A> = StoreWithState<
   S &
   StoreWithActions<A>
 
-let activePinia: Pinia
+let store: Pinia
 
 function initStore<Id extends string, S extends StateTree>(
   $id: Id,
   buildState: () => S = () => ({} as S),
   initialState?: S | undefined
 ): [StoreWithState<Id, S>, { get: () => S; set: (newValue: S) => void }] {
-  const pinia = activePinia
+  const pinia = store
   pinia.state.value[$id] = initialState || buildState()
 
   const storeWithState: StoreWithState<Id, S> = {
@@ -66,8 +66,6 @@ function buildStoreToUse<
   $id: Id,
   actions: A = {} as A
 ) {
-  const pinia = activePinia
-
   const wrappedActions: StoreWithActions<A> = {} as StoreWithActions<A>
   for (const actionName in actions) {
     wrappedActions[actionName] = function () {
@@ -101,9 +99,10 @@ function defineStore<Id extends string, S extends StateTree, A>(options: {
     state: ref({}),
   }
 
-  activePinia = pinia
+  store = pinia
 
   return function useStore(): Store<Id, S, A> {
+    console.log(pinia.state.value, id, pinia.state.value[id])
     const storeAndDescriptor: StoreAndDescription<Id, S> = initStore(
       id,
       state,
@@ -130,4 +129,18 @@ export const useMainStore = defineStore({
       this.state.counter += 1
     },
   },
+})
+
+const main = useMainStore()
+
+export const useOtherStore = defineStore({
+  id: 'other-store',
+  state: () => ({
+    name: 'foo'
+  }),
+  actions: {
+    changeName() {
+      this.state.name = `Count is ${main.state.counter}`
+    }
+  }
 })

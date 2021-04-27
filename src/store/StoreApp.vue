@@ -1,15 +1,18 @@
 <template>
   {{ counter }}
   <button @click="click">Update</button>
+  {{ other.name }}
+  <button @click="update">Change name</button>
 </template>
 
 <script lang="ts">
 import { computed } from 'vue'
-import { useMainStore } from './index'
+import { useMainStore, useOtherStore } from './index'
 
 export default {
   setup() {
     const store = useMainStore()
+    const other = useOtherStore()
 
     const click = () => {
       store.inc()
@@ -17,7 +20,11 @@ export default {
 
     return {
       click,
-      counter: computed(() => store.state.counter)
+      update: () => {
+        other.changeName()
+      },
+      counter: computed(() => store.state.counter),
+      other: other.state
     }
   },
 }
