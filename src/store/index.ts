@@ -80,7 +80,7 @@ function buildStoreToUse<
     ...wrappedActions,
   }) as Store<Id, S, A>
 
-  Object.defineProperty(store, 'state', descriptor)
+  // Object.defineProperty(store, 'state', descriptor)
 
   return store
 }
