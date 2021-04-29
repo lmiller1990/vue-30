@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { computed } from 'vue'
-import { useMainStore, useOtherStore } from './index'
+import { useMainStore, useOtherStore } from './index2'
 
 export default {
   setup() {
