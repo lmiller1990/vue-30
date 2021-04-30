@@ -15,7 +15,7 @@ type StoreWithActions<A> = {
 type Store<
   S extends StateTree,
   A extends Record<string, Method>
-> = StoreWithState<S> & S & StoreWithActions<A>;
+> = StoreWithState<S> & StoreWithActions<A>;
 
 export type StateTree = Record<string | number | symbol, any>;
 function defineStore<
