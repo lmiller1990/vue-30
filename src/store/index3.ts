@@ -61,15 +61,3 @@ export const useMainStore = defineStore({
 
 
 const main = useMainStore();
-
-export const useOtherStore = defineStore({
-  state: {
-    name: "foo",
-  },
-  actions: {
-    changeName() {
-      this.state.name = `Count is ${main.state.counter}`;
-    },
-  },
-});
-
