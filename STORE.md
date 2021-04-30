@@ -1,6 +1,8 @@
-Writing A Type Safe Store
+## Writing A Type Safe Store
 
-In this article we explore some advanced TypeScript while building a type safe store with a similar API to [Pinia](https://github.com/posva/pinia) or [Vuex 5](https://github.com/vuejs/rfcs/discussions/270) (which is still in the RFC stage).
+In this article we explore some advanced TypeScript while building a type safe store with a similar API to [Pinia](https://github.com/posva/pinia) or [Vuex 5](https://github.com/vuejs/rfcs/discussions/270) (which is still in the RFC stage). I learned a lot of what was needed to write this article by reading the [Pinia](https://github.com/posva/pinia/) source code.
+
+You can find the source code [here](https://gist.github.com/lmiller1990/9ef32df8fb401e5f0482692ae974e6e0).
 
 The goal will be a `defineStore` function that looks like this:
 
@@ -83,7 +85,7 @@ function defineStore<
 
 `actions` is a bit more tricky. We know it's going to be a type of `A`, the second generic type passed to `defineStore`, but it also needs to have knowledge of `this`. Specifically, it needs to know that `this.state` exists, and `state` is a typed as `S`.
 
-The way this is typed is using an intersection typer (`&`) and [`ThisType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype). We need something similar to the example [in the docs](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype):
+The way this is typed is using an intersection type (`&`) and [`ThisType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype). We need something similar to the example [in the docs](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype):
 
 ```ts
 actions: A & ThisType<A & _STORE_WITH_STATE_>
@@ -198,7 +200,7 @@ type StoreWithActions<A> = {
 }
 ```
 
-Now we know it's a function. But the parameteres still aren't typed! We need to `infer` them - to infer a function has parameters, though, we first need to validate that it is actually a function:
+Now we know it's a function. But the parameters still aren't typed! We need to `infer` them - to infer a function has parameters, though, we first need to validate that it is actually a function:
 
 ```ts
 type StoreWithActions<A> = {
@@ -314,3 +316,5 @@ We created a type safe store. The types are a bit complex. We covered:
 - Intersections (`&`)
 
 An improvement would be to add `getters` using Vue's `computed` function. 
+
+You can find the source code [here](https://gist.github.com/lmiller1990/9ef32df8fb401e5f0482692ae974e6e0).
